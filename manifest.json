@@ -1,0 +1,24 @@
+{
+    "name": "Doomscroll Valley",
+    "description": "A clicker game where you scroll instead of click",
+    "version": "1.0",
+    "manifest_version": 3,
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": "images/temporary.png"
+    },
+    "content_scripts": [
+        {
+            "js": ["content.js"],
+            "matches": [
+                "https://instagram.com/reels/*",
+                "https://developer.chrome.com/docs/extensions/*",
+                "https://developer.chrome.com/docs/webstore/*"
+            ]
+        }
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "permissions": ["activeTab"]
+}
