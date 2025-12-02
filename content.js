@@ -1,43 +1,41 @@
-function renderReadingTime(article) {
-    //If we weren't provided an article, we don't need to render anything
-    if(!article) {
-        return;
-    }
+console.log("CONTENT.JS LOADED", window.location.href);
 
-    const text = article.textContent;
-    const wordMatchRegExp = /[^\s]+/g; //Regular expression
-    const words = text.matchAll(wordMatchRegExp);
-    //matchAll returns an iterator, convert to array to get word count
-    const wordCount = [...words].length;
-    const readingTime = Math.round(wordCount / 200);
-    const badge = document.createElement("p");
-    // Use the same styling as the publish information in an article's header
-    badge.classList.add("color-secondary-text", "type--caption");
-    badge.textContent = `⏱️ ${readingTime} min read`;
-
-    // Support for API reference docs
-    const heading = article.querySelector("h1");
-    // Support for article docs with date
-    const date = article.querySelector("time")?.parentNode;
-
-    (date ?? heading).insertAdjacentElement("afterend", badge);
-}
-
-renderReadingTime(document.querySelector("article"));
-
-const observer = new MutationObserver((mutations) => {
-    for (const mutation of mutations) {
-        // If a new article was added
-        for (const node of mutation.addedNodes) {
-            if (node instanceof Element && node.tagName === 'ARTICLE') {
-                //Render the reading time for this particular article
-                renderReadingTime(node);
-            }
-        }
+// Listen for messages from popup
+chrome.runtime.onMessage.addListener((msg) => {
+    if (msg.action === "showBeginning") {
+        showBeginning();
     }
 });
 
-//update the address bar without reloading
-observer.observe(document.querySelector('devsite-content'), {
-    childList: true
+// Function to show the floating div
+function showBeginning() {
+    console.log("button works");
+
+    // Create div if it doesn't exist
+    let firstDiv = document.getElementById("firstDiv");
+    if (!firstDiv) {
+        firstDiv = document.createElement("div");
+        firstDiv.id = "firstDiv";
+        firstDiv.style.position = "fixed";
+        firstDiv.style.top = "10px";
+        firstDiv.style.right = "10px";
+        firstDiv.style.backgroundColor = "yellow";
+        firstDiv.style.padding = "10px";
+        firstDiv.style.zIndex = 9999;
+        document.body.appendChild(firstDiv);
+    }
+
+    firstDiv.textContent = "Hello from extension";
+}
+
+// Scroll detection
+window.addEventListener("scroll", () => {
+    console.log("User scrolled. Scroll position:", window.scrollY);
+});
+
+// Down-arrow detection
+window.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowDown") {
+        console.log("Down arrow pressed");
+    }
 });

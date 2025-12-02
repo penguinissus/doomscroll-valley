@@ -11,14 +11,15 @@
         {
             "js": ["content.js"],
             "matches": [
-                "https://instagram.com/reels/*",
+                "https://www.instagram.com/reels/*",
                 "https://developer.chrome.com/docs/extensions/*",
-                "https://developer.chrome.com/docs/webstore/*"
+                "https://developer.chrome.com/docs/webstore/*",
+                "https://developer.chrome.com/docs/extensions",
+                "https://developer.chrome.com/docs/extensions/",
+                "https://instagram.com/reels/*",
+                "https://chatgpt.com/"
             ]
         }
     ],
-    "background": {
-        "service_worker": "background.js"
-    },
     "permissions": ["activeTab"]
 }
